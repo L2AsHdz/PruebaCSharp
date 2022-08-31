@@ -1,0 +1,39 @@
+﻿@page
+@model EmpleadosApp.Pages.Empleados.IndexModel
+@{
+}
+
+<br />
+<h2>Listado de empleados</h2>
+<a class="btn btn-primary" href="/Empleados/Create">Nuevo empleado</a>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>CUI</th>
+            <th>Nombre</th>
+            <th>Apellidos</th>
+            <th>Sueldo</th>
+            <th>Fecha Ingreso</th>
+            <th>Puesto</th>
+            <th>Departamento</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var e in Model.empleados)
+        {
+            <tr>
+                <td>@e.CUI</td>
+                <td>@e.Nombre</td>
+                <td>@e.Apellido</td>
+                <td>Q.@e.Sueldo</td>
+                <td>@e.FechaIngreso</td>
+                <td>@e.Puesto.Nombre</td>
+                <td>@e.Departamento.Nombre</td>
+                <td>
+                    <a class="btn btn-warning btn-sm" href="/Empleados/Edit?cui=@e.CUI">Editar</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

@@ -1,5 +1,6 @@
 ﻿using EmpleadosApp.Model;
 using MySql.Data.MySqlClient;
+using System.Data;
 
 namespace EmpleadosApp.Data
 {
@@ -24,7 +25,7 @@ namespace EmpleadosApp.Data
 
             try
             {
-                conn.Open();
+                if (conn.State == ConnectionState.Closed) conn.Open();
                 MySqlCommand cmd = new(sql, conn);
                 cmd.Parameters.AddWithValue("@nombre", obj.Nombre);
                 cmd.Parameters.AddWithValue("@descripcion", obj.Descripcion);
@@ -37,7 +38,7 @@ namespace EmpleadosApp.Data
             }
             finally
             {
-                conn.Close();
+                if (conn.State == ConnectionState.Open) conn.Close();
             }
         }
 
@@ -53,7 +54,7 @@ namespace EmpleadosApp.Data
             Puesto puesto = null;
             try
             {
-                conn.Open();
+                if (conn.State == ConnectionState.Closed) conn.Open();
                 MySqlCommand comando = new MySqlCommand(sql, conn);
                 reader = comando.ExecuteReader();
 
@@ -75,7 +76,7 @@ namespace EmpleadosApp.Data
             }
             finally
             {
-                conn.Close();
+                if (conn.State == ConnectionState.Open) conn.Close();
             }
             return puesto;
         }
@@ -89,7 +90,7 @@ namespace EmpleadosApp.Data
 
             try
             {
-                conn.Open();
+                if (conn.State == ConnectionState.Closed) conn.Open();
                 MySqlCommand comando = new(sql, conn);
                 reader = comando.ExecuteReader();
 
@@ -111,7 +112,7 @@ namespace EmpleadosApp.Data
             }
             finally
             {
-                conn.Close();
+                if (conn.State == ConnectionState.Open) conn.Close();
             }
             return puestos;
         }
@@ -122,7 +123,7 @@ namespace EmpleadosApp.Data
 
             try
             {
-                conn.Open();
+                if (conn.State == ConnectionState.Closed) conn.Open();
                 MySqlCommand cmd = new(sql, conn);
                 cmd.Parameters.AddWithValue("@id", obj.Id);
                 cmd.Parameters.AddWithValue("@nombre", obj.Nombre);
@@ -137,7 +138,7 @@ namespace EmpleadosApp.Data
             }
             finally
             {
-                conn.Close();
+                if (conn.State == ConnectionState.Open) conn.Close();
             }
         }
     }

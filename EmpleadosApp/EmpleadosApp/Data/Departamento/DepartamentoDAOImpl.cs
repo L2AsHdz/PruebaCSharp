@@ -1,5 +1,6 @@
 ﻿using EmpleadosApp.Model;
 using MySql.Data.MySqlClient;
+using System.Data;
 
 namespace EmpleadosApp.Data
 {
@@ -25,7 +26,7 @@ namespace EmpleadosApp.Data
             string sql = "INSERT INTO DEPARTAMENTO(nombre, presupuesto, descripcion) VALUES(@nombre, @presupuesto, @descripcion)";
             try
             {
-                conn.Open();
+                if (conn.State == ConnectionState.Closed) conn.Open();
                 MySqlCommand cmd = new(sql, conn);
                 cmd.Parameters.AddWithValue("@nombre", obj.Nombre);
                 cmd.Parameters.AddWithValue("@presupuesto", obj.Presupuesto);
@@ -38,7 +39,7 @@ namespace EmpleadosApp.Data
             }
             finally
             {
-                conn.Close();
+                if (conn.State == ConnectionState.Open) conn.Close();
             }
         }
 
@@ -54,7 +55,7 @@ namespace EmpleadosApp.Data
             Departamento departamento = null;
             try
             {
-                conn.Open();
+                if (conn.State == ConnectionState.Closed) conn.Open();
                 MySqlCommand comando = new(sql, conn);
                 reader = comando.ExecuteReader();
                 if (reader.Read())
@@ -74,7 +75,7 @@ namespace EmpleadosApp.Data
             }
             finally
             {
-                conn.Close();
+                if (conn.State == ConnectionState.Open) conn.Close();
             }
             return departamento;
         }
@@ -86,7 +87,7 @@ namespace EmpleadosApp.Data
             string sql = "SELECT * FROM DEPARTAMENTO";
             try
             {
-                conn.Open();
+                if (conn.State == ConnectionState.Closed) conn.Open();
                 MySqlCommand comando = new(sql, conn);
                 reader = comando.ExecuteReader();
                 while (reader.Read())
@@ -107,7 +108,7 @@ namespace EmpleadosApp.Data
             }
             finally
             {
-                conn.Close();
+                if (conn.State == ConnectionState.Open) conn.Close();
             }
             return departamentos;
         }
@@ -117,7 +118,7 @@ namespace EmpleadosApp.Data
             string sql = "UPDATE DEPARTAMENTO SET nombre=@nombre, presupuesto=@presupuesto, descripcion=@descripcion WHERE id_departamento=@id_departamento";
             try
             {
-                conn.Open();
+                if (conn.State == ConnectionState.Closed) conn.Open();
                 MySqlCommand cmd = new(sql, conn);
                 cmd.Parameters.AddWithValue("@nombre", obj.Nombre);
                 cmd.Parameters.AddWithValue("@presupuesto", obj.Presupuesto);
@@ -131,7 +132,7 @@ namespace EmpleadosApp.Data
             }
             finally
             {
-                conn.Close();
+                if (conn.State == ConnectionState.Open) conn.Close();
             }
         }
     }

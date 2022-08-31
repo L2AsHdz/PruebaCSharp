@@ -5,7 +5,7 @@
         public string CUI { get; set; }
         public string Nombre { get; set; }
         public string Apellido { get; set; }
-        public double sueldo { get; set; }
+        public double Sueldo { get; set; }
         public string FechaIngreso { get; set; }
         public string FechaBaja { get; set; }
         public Puesto Puesto { get; set; }

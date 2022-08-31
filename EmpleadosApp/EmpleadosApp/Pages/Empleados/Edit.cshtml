@@ -1,0 +1,79 @@
+﻿@page
+@model EmpleadosApp.Pages.Empleados.EditModel
+@{
+}
+
+<br />
+<h2>Editar empleado</h2>
+
+@if (Model.errorMessage.Length > 0)
+{
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        <strong>@Model.errorMessage</strong>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+}
+
+<form method="post">
+    <div class="row mb-3">
+        <label class="col-sm-3 col-form-label">CUI</label>
+        <div class="col-sm-6">
+            <input type="text" class="form-control" name="cui" value="@Model.empleado.CUI" />
+        </div>
+    </div>
+    <div class="row mb-3">
+        <label class="col-sm-3 col-form-label">Nombre</label>
+        <div class="col-sm-6">
+            <input type="text" class="form-control" name="nombre" value="@Model.empleado.Nombre" />
+        </div>
+    </div>
+    <div class="row mb-3">
+        <label class="col-sm-3 col-form-label">Apellidos</label>
+        <div class="col-sm-6">
+            <input type="text" class="form-control" name="apellidos" value="@Model.empleado.Apellido" />
+        </div>
+    </div>
+    <div class="row mb-3">
+        <label class="col-sm-3 col-form-label">Sueldo</label>
+        <div class="col-sm-6">
+            <input type="text" class="form-control" name="sueldo" value="@Model.empleado.Sueldo" />
+        </div>
+    </div>
+    <div class="row mb-3">
+        <label class="col-sm-3 col-form-label">Fecha ingreso</label>
+        <div class="col-sm-6">
+            <input type="date" class="form-control" name="fecha" value="@Model.empleado.FechaIngreso" />
+        </div>
+    </div>
+    <div class="row mb-3">
+        <label class="col-sm-3 col-form-label">Puesto</label>
+        <div class="col-sm-6">
+            <select class="form-select" name="puesto" selected="@Model.empleado.Puesto.Id">
+                @foreach (var p in Model.puestos)
+                {
+                    <option value="@p.Id">@p.Nombre</option>
+                }
+            </select>
+        </div>
+    </div>
+    <div class="row mb-3">
+        <label class="col-sm-3 col-form-label">Puesto</label>
+        <div class="col-sm-6">
+            <select class="col-sm-6 form-select" name="departamento" selected="@Model.empleado.Departamento.Id">
+                @foreach (var d in Model.departamentos)
+                {
+                    <option value="@d.Id">@d.Nombre</option>
+                }
+            </select>
+        </div>
+    </div>
+
+    <div class="row mb-3">
+        <div class="offset-sm-3 col-sm-3 d-grid">
+            <button type="submit" class="btn btn-primary">Guardar</button>
+        </div>
+        <div class="col-sm-3 d-grid">
+            <a class="btn btn-outline-primary" href="/Empleados/Index" role="button">Cancelar</a>
+        </div>
+    </div>
+</form>
