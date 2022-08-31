@@ -1,0 +1,34 @@
+﻿@page
+@model EmpleadosApp.Pages.Departamentos.IndexModel
+@{
+}
+
+<br />
+<h2>Listado de departamentos</h2>
+<a class="btn btn-primary" href="/Departamentos/Create">Nuevo departamento</a>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Id</th>
+            <th>Nombre</th>
+            <th>Presupuesto</th>
+            <th>Descripcion</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var d in Model.departamentos)
+        {
+            <tr>
+                <td>@d.Id</td>
+                <td>@d.Nombre</td>
+                <td>Q. @d.Presupuesto</td>
+                <td>@d.Descripcion</td>
+                <td>
+                    <a class="btn btn-warning btn-sm" href="/Departamentos/Edit?id=@d.Id">Editar</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
