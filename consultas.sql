@@ -1,0 +1,16 @@
+SELECT apellidos FROM empleado;
+SELECT DISTINCT apellidos FROM empleado;
+SELECT * FROM empleado WHERE apellidos LIKE '%Pérez%';
+SELECT * FROM empleado WHERE apellidos LIKE '%Pérez%' OR apellidos LIKE '%López%';
+SELECT e.* FROM empleado e INNER JOIN departamento d ON e.cod_depto=d.codigo_departamento WHERE d.nombre_depto='Contabilidad';
+SELECT e.* FROM empleado e INNER JOIN departamento d ON e.cod_depto=d.codigo_departamento WHERE d.nombre_depto='Contabilidad' OR d.nombre_depto='Gerencia';
+SELECT * FROM empleado WHERE apellidos LIKE 'P%';
+SELECT SUM(presupuesto) presupuesto_total FROM departamento;
+SELECT d.nombre_depto, COUNT(*) no_empleados FROM empleado e INNER JOIN departamento d ON e.cod_depto=d.codigo_departamento GROUP BY d.codigo_departamento;
+SELECT e.*, d.* FROM empleado e INNER JOIN departamento d ON e.cod_depto=d.codigo_departamento;
+SELECT e.nombre, e.apellidos, d.nombre_depto, d.presupuesto FROM empleado e INNER JOIN departamento d ON e.cod_depto=d.codigo_departamento ORDER BY e.apellidos DESC;
+SELECT e.nombre, e.apellidos FROM empleado e INNER JOIN departamento d ON e.cod_depto=d.codigo_departamento WHERE d.presupuesto > 60000;
+SELECT * FROM departamento WHERE presupuesto > (SELECT AVG(presupuesto) FROM departamento);
+SELECT d.nombre_depto, COUNT(*) no_empleados FROM empleado e INNER JOIN departamento d ON e.cod_depto=d.codigo_departamento GROUP BY d.codigo_departamento HAVING no_empleados > 2;
+INSERT INTO departamento() VALUES(11, 'Control de Calidad', 40000);
+INSERT INTO empleado() VALUES(28948238, 'Esther', 'Vásquez', 11);
