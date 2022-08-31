@@ -26,7 +26,7 @@ namespace EmpleadosApp.Data
                 "VALUES(@cui, @nombre, @apellido, @sueldo, @fecha, @id_puesto, @id_departamento)";
             try
             {
-                
+
                 if (conn.State == ConnectionState.Closed) conn.Open();
                 MySqlCommand cmd = new(sql, conn);
                 cmd.Parameters.AddWithValue("@cui", obj.CUI);
@@ -101,7 +101,7 @@ namespace EmpleadosApp.Data
         {
             MySqlDataReader reader;
             string sql = "SELECT e.*, p.nombre pnombre, d.nombre dnombre FROM EMPLEADO e INNER JOIN PUESTO p ON e.id_puesto = p.id_puesto" +
-                " INNER JOIN DEPARTAMENTO d ON e.id_departamento = d.id_departamento";
+                " INNER JOIN DEPARTAMENTO d ON e.id_departamento = d.id_departamento WHERE fecha_baja IS NULL";
             List<Empleado> empleados = new();
             try
             {
@@ -117,6 +117,51 @@ namespace EmpleadosApp.Data
                         Apellido = reader.GetString("apellidos"),
                         Sueldo = reader.GetDouble("sueldo"),
                         FechaIngreso = reader.GetString("fecha_ingreso"),
+                        Puesto = new()
+                        {
+                            Id = reader.GetInt32("id_puesto"),
+                            Nombre = reader.GetString("pnombre")
+                        },
+                        Departamento = new()
+                        {
+                            Id = reader.GetInt32("id_departamento"),
+                            Nombre = reader.GetString("dnombre")
+                        }
+                    });
+                }
+            }
+            catch (MySqlException ex)
+            {
+                Console.WriteLine(ex.Message.ToString());
+            }
+            finally
+            {
+                if (conn.State == ConnectionState.Open) conn.Close();
+            }
+            return empleados;
+        }
+
+        public List<Empleado> ReadAllBajas()
+        {
+            MySqlDataReader reader;
+            string sql = "SELECT e.*, p.nombre pnombre, d.nombre dnombre FROM EMPLEADO e INNER JOIN PUESTO p ON e.id_puesto = p.id_puesto" +
+                " INNER JOIN DEPARTAMENTO d ON e.id_departamento = d.id_departamento WHERE fecha_baja IS NOT NULL";
+            List<Empleado> empleados = new();
+            try
+            {
+                if (conn.State == ConnectionState.Closed) conn.Open();
+                MySqlCommand comando = new(sql, conn);
+                reader = comando.ExecuteReader();
+                while (reader.Read())
+                {
+                    empleados.Add(new()
+                    {
+                        CUI = reader.GetString("cui"),
+                        Nombre = reader.GetString("nombre"),
+                        Apellido = reader.GetString("apellidos"),
+                        Sueldo = reader.GetDouble("sueldo"),
+                        FechaIngreso = reader.GetString("fecha_ingreso"),
+                        FechaBaja = reader.GetString("fecha_baja"),
                         Puesto = new()
                         {
                             Id = reader.GetInt32("id_puesto"),
@@ -166,6 +211,49 @@ namespace EmpleadosApp.Data
             {
                 if (conn.State == ConnectionState.Open) conn.Close();
             }
+        }
+
+        public void UpdateBaja(Empleado obj)
+        {
+            string sql = "UPDATE EMPLEADO SET fecha_baja=@fecha WHERE cui=@cui";
+            try
+            {
+                if (conn.State == ConnectionState.Closed) conn.Open();
+                MySqlCommand cmd = new(sql, conn);
+                cmd.Parameters.AddWithValue("@cui", obj.CUI);
+                cmd.Parameters.AddWithValue("@fecha", obj.FechaBaja);
+                cmd.ExecuteNonQuery();
+            }
+            catch (MySqlException ex)
+            {
+                Console.WriteLine(ex.Message.ToString());
+            }
+            finally
+            {
+                if (conn.State == ConnectionState.Open) conn.Close();
+            }
+        }
+
+        public void UpdateSueldo(Empleado obj)
+        {
+            string sql = "UPDATE EMPLEADO SET sueldo=@sueldo WHERE cui=@cui";
+            try
+            {
+                if (conn.State == ConnectionState.Closed) conn.Open();
+                MySqlCommand cmd = new(sql, conn);
+                cmd.Parameters.AddWithValue("@cui", obj.CUI);
+                cmd.Parameters.AddWithValue("@sueldo", obj.Sueldo);
+                cmd.ExecuteNonQuery();
+            }
+            catch (MySqlException ex)
+            {
+                Console.WriteLine(ex.Message.ToString());
+            }
+            finally
+            {
+                if (conn.State == ConnectionState.Open) conn.Close();
+            }
+
         }
     }
 }

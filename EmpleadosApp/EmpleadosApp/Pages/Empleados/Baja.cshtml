@@ -1,11 +1,10 @@
 ﻿@page
-@model EmpleadosApp.Pages.Empleados.IndexModel
+@model EmpleadosApp.Pages.Empleados.BajaModel
 @{
 }
 
 <br />
-<h2>Listado de empleados</h2>
-<a class="btn btn-primary" href="/Empleados/Create">Nuevo empleado</a>
+<h2>Listado de empleados dados de baja</h2>
 
 <table class="table">
     <thead>
@@ -15,9 +14,9 @@
             <th>Apellidos</th>
             <th>Sueldo</th>
             <th>Fecha Ingreso</th>
+            <th>Fecha Baja</th>
             <th>Puesto</th>
             <th>Departamento</th>
-            <th></th>
         </tr>
     </thead>
     <tbody>
@@ -29,14 +28,9 @@
                 <td>@e.Apellido</td>
                 <td>Q.@e.Sueldo</td>
                 <td>@e.FechaIngreso</td>
+                <td>@e.FechaBaja</td>
                 <td>@e.Puesto.Nombre</td>
                 <td>@e.Departamento.Nombre</td>
-                <td>
-                    <a class="btn btn-warning btn-sm" href="/Empleados/Edit?cui=@e.CUI">Editar</a>
-                    <a class="btn btn-danger btn-sm" href="/Empleados/Index?cui=@e.CUI">Dar de baja</a>
-                    <a class="btn btn-secondary btn-sm" href="/Empleados/Aumentar?cui=@e.CUI">Aumentar sueldo</a>
-                    <a class="btn btn-info btn-sm" href="/Empleados/Aumentos?cui=@e.CUI">Ver aumentos</a>
-                </td>
             </tr>
         }
     </tbody>

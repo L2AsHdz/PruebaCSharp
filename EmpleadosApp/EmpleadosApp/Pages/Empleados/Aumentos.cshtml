@@ -1,0 +1,31 @@
+﻿@page
+@model EmpleadosApp.Pages.Empleados.AumentosModel
+@{
+}
+
+<br />
+<h2>Listado de aumentos</h2>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>CUI</th>
+            <th>Nombre</th>
+            <th>Sueldo Anterior</th>
+            <th>Sueldo Nuevo</th>
+            <th>Fecha Aumento</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var e in Model.aumentos)
+        {
+            <tr>
+                <td>@e.Empleado.CUI</td>
+                <td>@e.Empleado.Nombre</td>
+                <td>@e.SalarioAnterior</td>
+                <td>Q.@e.SalarioNuevo</td>
+                <td>@e.Fecha</td>
+            </tr>
+        }
+    </tbody>
+</table>
